@@ -1,28 +1,57 @@
 var mongo = require('mongodb');
+var mongoose = require('mongoose');
 
-var Server = mongo.Server,
-	Db = mongo.Db,
-	BSON = mongo.BSONPure;
-	
-var server = new Server('localhost', 27017, {auto_reconnect: true});
-db = new Db('postdb', server);
+mongoose.connect("mongodb://App:geeks@ds056727.mongolab.com:56727/superdatabase");
 
-db.open(function(err, db){
-	if(!err){
-		console.log("Connected to 'postdb'");
-		db.collection('posts', {strict:true}, function(err, collection){
-			if(err){
-				console.log("The 'posts' collection doesn't exist. Creating it with sample data. . .");
-				populateDB();
-			}
-		});
-	}	
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error: '));
+db.once('open', function callback(){
 });
+
+//var Server = mongo.Server,
+//	Db = mongo.Db,
+//	BSON = mongo.BSONPure;
+	
+//var server = new Server('localhost', 27017, {auto_reconnect: true});
+//db = new Db('postdb', server, {safe: false});
+
+//var MongoClient = mongo.MongoClient;
+//var server = mongo.Server;
+//var mongoClient = new MongoClient(new server('localhost', 27017));
+//db = mongoClient.db("mydb");
+
+//mongo.MongoClient.connect('mongodb://App:geeks@ds056727.mongolab.com:56727/superdatabase', { server: { auto_reconnect: true } }, function(err, db) {
+//  	if(!err){
+//		console.log("Connected to 'mongolab'");
+//		db.collection('posts', {strict:true}, function(err, collection){
+//			if(err){
+//				console.log("The 'posts' collection doesn't exist. Creating it with sample data. . .");
+//				populateDB(err, db);
+//			}
+//		});
+//	}		
+//});
+
+//db.open(function(err, db){
+//	console.log("Open error: " + err);
+//	console.log("Open DB: " + db);
+//	if(!err){
+//		console.log("Connected to 'postdb'");
+//		db.collection('posts', {strict:true}, function(err, collection){
+//			if(err){
+//				console.log("The 'posts' collection doesn't exist. Creating it with sample data. . .");
+//				populateDB();
+//			}
+//		});
+//	}	
+//});
+
+
 
 /*--------------------------------------------------------------------------------------------------------------------*/
 // Populate database with sample data -- Only used once: the first time the application is started.
 // You'd typically not find this code in a real-life app, since the database would already exist.
-var populateDB = function() {
+var populateDB = function(err, db) {
 	var guide = [
 		{
 			name: "Introduction", htmlText: "<p>This site is a guide to all developers wishing to contribute to or integrate with the inknote project.</p>"

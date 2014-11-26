@@ -1,7 +1,34 @@
-//exports.findById = function(req, res) {
-//    res.send({id:req.params.id, name: "The Name", description: "description"});
-//};
+var mongoose = require('mongoose');
 
+var postSchema = mongoose.Schema({
+	user: String,
+	userID: String,
+	threadID: String,
+	time: String,
+	message: String
+});
+
+var Post = mongoose.model('Post', postSchema);
+	
+exports.getAllPosts = function(req, res){
+	var thisResult = null;
+	Post.find(function(err, posts){
+		if(err) return console.error(err);
+		res.send(posts);
+	});
+}
+
+exports.addPost = function(req, res){
+	var post = req.body;
+	var newPost = new Post(post);
+	newPost.save(function(err, newPost){
+		if (err) return console.error(err);
+	});
+}
+
+//ones below need replacing with mongoose
+
+/*
 exports.findById = function(req, res){
 	var id = req.params.id;
 	console.log('Retrieving post: ' + id);
@@ -11,19 +38,9 @@ exports.findById = function(req, res){
 		});
 	});
 };
+*/
 
-//exports.findAll = function(req, res) {
-//    res.send([{name:'post1'}, {name:'post2'}, {name:'post3'}]);
-//};
-
-exports.findAll = function(req, res) {
-    db.collection('posts', function(err, collection) {
-        collection.find().toArray(function(err, items) {
-            res.send(items);
-        });
-    });
-};
-
+/*
 exports.addPost = function(req, res) {
     var post = req.body;
     console.log('Adding post: ' + JSON.stringify(post));
@@ -37,8 +54,9 @@ exports.addPost = function(req, res) {
             }
         });
     });
-}
+}*/
 
+/*
 exports.deletePost = function(req, res) {
     var id = req.params.id;
     console.log('Deleting post: ' + id);
@@ -52,4 +70,4 @@ exports.deletePost = function(req, res) {
             }
         });
     });
-}
+}*/

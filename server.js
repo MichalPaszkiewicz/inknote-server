@@ -1,5 +1,5 @@
-var database = require('./database'),
-	express = require('express'),
+var express = require('express'),
+	database = require('./database'),
 	threads = require('./routes/threads'),
 	guide = require('./routes/guide'),
 	posts = require('./routes/posts');
@@ -32,10 +32,10 @@ app.configure(function(){
 app.get('/guide', guide.findAll);
 app.get('/threads', threads.findAll);
 app.post('/threads', threads.addThread);
-app.get('/posts', posts.findAll);
-app.get('/posts/:id', posts.findById);
+app.get('/posts', posts.getAllPosts);
+//app.get('/posts/:id', posts.findById);
 app.post('/posts', posts.addPost);
-app.delete('/posts/:id', posts.deletePost);
+//app.delete('/posts/:id', posts.deletePost);
  
 app.listen(3000);
 console.log('Listening on port 3000...');
