@@ -1,7 +1,7 @@
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
-mongoose.connect("mongodb://App:geeks@ds056727.mongolab.com:56727/superdatabase");
+mongoose.connect("mongodb://#######:###########@ds056727.mongolab.com:56727/################");
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error: '));
